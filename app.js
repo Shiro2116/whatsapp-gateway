@@ -99,7 +99,7 @@ app.get('/api/registration', async function (req, res) {
         fs.unlinkSync(SESSION_FILE_PATH);
         sessionCfg = null;
 
-        //destroy client instant 
+        //destroy client instant
         ConnectedClient[USER_ID].destroy().then(function () {
             console.log('Client is shutdown..');
 
@@ -135,7 +135,7 @@ app.get('/api/registration', async function (req, res) {
         }
     });
 
-    //start whatsapp client engine 
+    //start whatsapp client engine
     console.log('initializing');
     var registeringOK = false;
     var message = "Registration Success";
@@ -169,7 +169,7 @@ app.post('/api/message', routeMain.handleIndex.bind(routeMain));
 app.get('/api/device', routeMain.handleDevice.bind(routeMain));
 app.post('/api/device', routeMain.handleDevice.bind(routeMain));
 
-//get qrcode 
+//get qrcode
 app.get('/api/qr', routeMain.handleScanner.bind(routeMain));
 
 //reset will remove session so we need to scan new qrcode
@@ -208,6 +208,14 @@ app.get('/api/list-user', function (req, res) {
     res.send(JSON.stringify({
         info: true,
         data: extractClient(ConnectedClient)
+    }));
+});
+
+app.get('/', function (req, res) {
+    res.setHeader('Content-Type', 'Application/Json');
+    res.send(JSON.stringify({
+        info: true,
+        data: "hay"
     }));
 });
 
