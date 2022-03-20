@@ -8,8 +8,20 @@ const bodyParser = require('body-parser');
 const cfg = require('./src/lib/constant');
 
 const app = express();
-const port = 3002;
-const host = "0.0.0.0";
+const port = process.env.PORT || 3000;
+const host = process.env.HOST || "0.0.0.0";
+
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   if ('OPTIONS' == req.method) {
+      res.sendStatus(200);
+    }
+    else {
+      next();
+    }
+});
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -59,7 +71,15 @@ app.get('/api/registration', async function (req, res) {
         sessionCfg = require(SESSION_FILE_PATH);
     }
 
-    ConnectedClient[USER_ID] = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, session: sessionCfg });
+    ConnectedClient[USER_ID] = new Client({ puppeteer: { headless: true, args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--single-process', // <- this one doesn't works in Windows
+          '--disable-gpu'] }, session: sessionCfg });
     ConnectedClient[USER_ID].on('disconnected', (reason) => {
         if (fs.existsSync(SESSION_FILE_PATH)) {
             // remove current session file
@@ -215,7 +235,7 @@ app.get('/', function (req, res) {
     res.setHeader('Content-Type', 'Application/Json');
     res.send(JSON.stringify({
         info: true,
-        data: "hay"
+        data: "niandev"
     }));
 });
 
