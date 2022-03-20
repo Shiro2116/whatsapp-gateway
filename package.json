@@ -1,5 +1,5 @@
 {
-  "name": "wabot",
+  "name": "whatsapp-gateway",
   "version": "1.0.0",
   "description": "test wabot",
   "main": "app.js",
@@ -17,7 +17,7 @@
   "keywords": [
     "wabot"
   ],
-  "author": "barokurniawan",
+  "author": "azharnian",
   "license": "ISC",
   "homepage": ""
 }
