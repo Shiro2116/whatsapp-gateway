@@ -49,7 +49,7 @@
         function doChecking(){
             let host = window.location.host;
             let clx = location.search.split('?cl=')[1];
-            $.get(host + '/api/qr', {cl: clx}, function(res){
+            $.get('/api/qr', {cl: clx}, function(res){
                 if(res.info){
                     imageQR.attr('src', res.data.base64);
                 }
