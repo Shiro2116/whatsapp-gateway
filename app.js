@@ -195,6 +195,24 @@ app.get('/api/qr', routeMain.handleScanner.bind(routeMain));
 //reset will remove session so we need to scan new qrcode
 //reset will make some downtime
 app.post('/api/device/reset', function (req, res) {
+
+    StreamQRList[USER_ID] = null;
+
+     var querySTR = req.query;
+    if (typeof querySTR.phone == 'undefined') {
+        res.setHeader('Content-Type', 'Application/Json');
+        res.send(JSON.stringify({
+            info: false,
+            status_code: cfg.status_code.MISSING_REQUIRED_ARGS,
+            status: 'Phone number is required to registration.'
+        }));
+
+        return;
+    }
+
+    var USER_ID = generateID(querySTR.phone);
+    var SESSION_FILE_PATH = './session/botsession-' + USER_ID + '.json';
+
     if (fs.existsSync(SESSION_FILE_PATH) == false || routeMain.clientReady == false) {
         res.setHeader('Content-Type', 'Application/Json');
         res.send(JSON.stringify({
