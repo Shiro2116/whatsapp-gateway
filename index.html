@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>- Niandev -</title>
+             <!-- Fonts -->
+        <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    </head>
+<body>
+ <div id="app">
+    <main class="py-4">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <img id="imageQR" src="" alt="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <p>Scan the QRCode to continue</p>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-sm-4" style="margin-top: 20px;">
+                            <div class="progress progress-sm" id="loadingBar">
+                                <div class="progress-bar progress-bar-indeterminate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+ </div>
+</body>
+<script>
+    $(document).ready(function(){
+        var imageQR = $("#imageQR"),
+        intervalCheck = null,
+        loadingBar = $("#loadingBar");
+        loadingBar.hide();
+        doChecking();
+        intervalCheck = setInterval(doChecking, 5000);
+        function doChecking(){
+            let clx = location.search.split('?cl=')[1];
+            $.get('http://47.241.236.15:3000/api/qr', {cl: clx}, function(res){
+                if(res.info){
+                    imageQR.attr('src', res.data.base64);
+                }
+                if(res.status_code == 100){
+                    clearInterval(intervalCheck);
+                    console.log(res);
+                    // window.location.assign('{{ route("internal_service_new") }}?step=3&cl={{ $client_phone }}');
+                }
+            });
+        }
+    });
+</script>
+</html>

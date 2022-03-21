@@ -4,16 +4,23 @@
   "description": "test wabot",
   "main": "app.js",
   "dependencies": {
-    "axios": "^0.21.0",
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "qrcode": "^1.4.4",
+    "axios": "^0.21.4",
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "qrcode": "^1.5.0",
     "whatsapp-web.js": "latest"
   },
-  "devDependencies": {},
+  "engines": {
+    "node": "v12.10.0"
+  },
+  "devDependencies": {
+     "nodemon": "^2.0.12"
+  },
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+
   "keywords": [
     "wabot"
   ],
