@@ -47,8 +47,9 @@
         doChecking();
         intervalCheck = setInterval(doChecking, 5000);
         function doChecking(){
+            let host = window.location.host;
             let clx = location.search.split('?cl=')[1];
-            $.get('http://47.241.236.15:3000/api/qr', {cl: clx}, function(res){
+            $.get(host + '/api/qr', {cl: clx}, function(res){
                 if(res.info){
                     imageQR.attr('src', res.data.base64);
                 }

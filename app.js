@@ -250,11 +250,7 @@ app.get('/api/list-user', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-    res.setHeader('Content-Type', 'Application/Json');
-    res.send(JSON.stringify({
-        info: true,
-        data: "niandev"
-    }));
+    res.sendFile('index.html', {root: __dirname});
 });
 
 function generateID(phone) {
